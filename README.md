@@ -9,7 +9,7 @@ open the directory as opt/odoo/odoo/
 and run the command ./odoo-bin to run the odoo in local server
 
 
-** TO CREAT THE CUSTOM MODEL **
+** TO CREAT THE CUSTOM MODEL (Students)**
 
 
 ./odoo-bin scaffold model-name path(where should this model to be saved or stotred)
