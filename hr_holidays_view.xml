@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--<record id="hr_holidays.open_company_allocation" model="ir.actions.act_window">
+            <field name="domain">[('holiday_type','=','employee'),('holiday_status_id.iswfh','!=',True)]</field>
+    </record>
+    
+    <record id="hr_holidays.open_employee_leaves" model="ir.actions.act_window">
+            <field name="domain">[('type','=','remove'),('holiday_status_id.iswfh','!=',True)]</field>
+    </record>
+
+    <record id="hr_holidays.action_hr_available_holidays_report" model="ir.actions.act_window">
+          <field name="domain">[('holiday_status_id.iswfh','!=',True)]</field>
+    </record>-->
+ 
+  <!-- To add parent_id field in users form (res_users)  -->
+
+    <record id="launchship_hr_res_users_parent_id" model="ir.ui.view">
+        <field name="name">Inhetitance In Preference</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='login']" position="after">
+                 <field name="parent_id" string='Parent ID' invisible='1' />                 
+            </xpath>
+        </field>
+    </record>
+
+
+
+        <record id="launchship_hr_res_partner_form" model="ir.ui.view">
+            <field name="name">launchship_res_partner_form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+               <xpath expr="//field[@name='lang']" position="after">
+                     
+                        <field name="first_week_off"/>
+                        <field name="second_week_off"/>
+                        
+                </xpath>
+
+             </field>
+        </record>
+
+
+   <!-- Leave holiday type form View -->
+    <!--<record id="launchship_hr_edit_holiday_status_form" model="ir.ui.view">
+            <field name="name">launchship.hr.holidays.status.form</field>
+            <field name="model">hr.holidays.status</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='color_name']" position="after">
+                        <field name="iswfh"/>
+                </xpath>
+            </field>
+    </record>-->
+
+        <!-- Leave Request form View -->
+        <record id="launchship_hr_holidays_view_form" model="ir.ui.view">
+            <field name="name">launchship.hr.holidays.view.form</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="arch" type="xml">
+            
+             <!-- remove duplicate from actions-->
+                    <xpath expr="//form" position="attributes">    
+                     <attribute name="duplicate">0</attribute>
+                    </xpath>
+
+
+
+               <xpath expr="//field[@name='display_name']" position="attributes">    
+                     <attribute name="invisible">1</attribute>
+                    </xpath>
+
+
+           <!-- Hide the apply button based on employee role-->
+            <!--<xpath expr="//button[@name='action_approve']" position="replace">
+                  <button string="Approve" name="action_approve" attrs="{'invisible': ['|',('hide', '=', False), ('state', 'in', ['validate', 'refuse'])]}" type="object" groups="hr_holidays.group_hr_holidays_user" class="oe_highlight"/>
+            </xpath>-->
+
+            <xpath expr="//button[@name='action_validate']" position="replace">
+                    <button string="Validate" name="action_validate" states="validate1" type="object" groups="hr_holidays.group_hr_holidays_manager" class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//button[@name='action_refuse']" position="replace">
+                    <button string="Refuse" name="action_refuse" states="confirm,validate,validate1" type="object" groups="hr_holidays.group_hr_holidays_user"/>
+            </xpath>
+
+
+             <xpath expr="//button[@name='action_draft']" position="replace">
+                    <button string="Reset to Draft" name="action_draft" type="object"
+                            attrs="{'invisible': [('can_reset', '=', False),('state', 'not in', ['confirm'])]}"/>
+            </xpath>
+
+
+           <xpath expr="//field[@name='holiday_type']" position="replace">
+                      <field name='holiday_type'/>
+                    
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="replace">
+                      <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')],'invisible':[('holiday_type','=','category')]}" groups="hr_holidays.group_hr_holidays_user"/>
+                    
+            </xpath>
+            <!--<xpath expr="//button[@name='action_confirm']" position="attributes">
+                        <attribute name="string">Submit</attribute>
+            </xpath>-->
+                     <xpath expr="//field[@name='holiday_status_id']" position="after">
+                         <field name="email_cc1" widget="many2many_tags" options="{'no_open':True,'no_create':1,'no_create_edit':1}"  attrs="{'readonly':[('state','not in',['draft','confirm'])],'invisible':[('state','not in',['draft','confirm'])]}"/>
+                        
+                        <field name="email_cc" attrs="{'readonly':[('state','not in',['draft','confirm'])],'invisible':[('state','in',['draft','confirm'])]}"/>
+                        <field name='hide' invisible='1' />
+                        <field name='test' invisible='1' />
+                        <field name='admin_email' invisible='1' />
+                        <field name="hide1" invisible='1' />
+                    </xpath>
+               </field>
+        </record>
+        
+        
+
+
+        <record id="resource_calendar_categ_form_launchship" model="ir.actions.act_window">
+            <field name="name">Working Time / Shifts</field>
+            <field name="res_model">resource.calendar</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+       
+       <menuitem
+            id="hr.menu_human_resources_configuration"
+            name="Configuration"
+            parent="hr.menu_hr_root"
+            groups="hr.group_hr_manager,hr.group_hr_user"
+            sequence="100"/>
+
+        <menuitem
+            id="hr.menu_view_employee_category_form"
+            action="hr.open_view_categ_form"
+            parent="hr.menu_human_resources_configuration"
+            groups="hr.group_hr_manager,hr.group_hr_user"
+            sequence="1"/>
+
+        <menuitem
+            id="menu_view_resource_calendar_launchship"
+            action="resource_calendar_categ_form_launchship"
+            parent="hr.menu_human_resources_configuration"
+            groups="hr.group_hr_manager,hr.group_hr_user"
+            sequence="2"/>
+        
+ 
+
+</odoo>
