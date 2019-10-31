@@ -1,0 +1,4 @@
+<record id="biometyric_id" model="res.groups">
+    <field name="name">Biometric Attendance</field>
+    <field name="category_id" ref="base.module_category_sales_management"/>
+</record>

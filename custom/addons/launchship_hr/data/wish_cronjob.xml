@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<odoo>
+    <record forcecreate="True" id="ir_cron_birthday" model="ir.cron">
+        <field name="name">Birthday Scheduler</field>
+        <field eval="True" name="active"/>
+        <field name="user_id" ref="base.user_root" />
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field eval="'hr.employee'" name="model"/>
+        <field eval="'send_birthday_email'" name="function"/>
+        <field eval="'()'" name="args"/>
+        <field name="state">code</field>
+    <field name="code">model.send_birthday_email()</field>
+    </record>
+    
+    <record forcecreate="True" id="ir_cron_work_anniversary" model="ir.cron">
+        <field name="name">Work Anniversary Scheduler</field>
+        <field eval="True" name="active"/>
+        <field name="user_id" ref="base.user_root" />
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field eval="'hr.employee'" name="model"/>
+        <field eval="'send_work_anniversary_email'" name="function"/>
+        <field eval="'()'" name="args"/>
+        <field name="state">code</field>
+    <field name="code">model.send_work_anniversary_email()</field>
+    </record>
+    
+    <record forcecreate="True" id="ir_cron_marriage_anniversary" model="ir.cron">
+        <field name="name">Marriage Anniversary Scheduler</field>
+        <field eval="True" name="active"/>
+        <field name="user_id" ref="base.user_root" />
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field eval="'hr.employee'" name="model"/>
+        <field eval="'send_mrg_anniversary_email'" name="function"/>
+        <field eval="'()'" name="args"/>
+        <field name="state">code</field>
+    <field name="code">model.send_mrg_anniversary_email()</field>
+    </record>
+    <record forcecreate="True" id="ir_cron_legal_leave_allocation" model="ir.cron">
+        <field name="name">Legal Leaves Allocation Monthly Notification</field>
+        <field eval="True" name="active"/>
+        <field name="user_id" ref="base.user_root" />
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field eval="'hr.employee'" name="model"/>
+        <field eval="'add_leaves_every_monthend'" name="function"/>
+        <field eval="'()'" name="args"/>
+        <field name="state">code</field>
+    <field name="code">model.add_leaves_every_monthend()</field>
+    </record>
+    
+</odoo>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="hr_bio_id" model="ir.module.category">
+    <field name="name">Biometric Attendance </field>
+</record>
+
+ <record id="hr_biometric_id" model="res.groups">
+    <field name="name">HR Biometric Attendance</field>
+    <field name="category_id" ref="hr_bio_id" />
+</record>
+
+<!-- <record id="hr_biometric_attendance_id" model="ir.rule">
+        <field name="name">HR  Attendance</field>
+        <field name="model_id" ref="model_checkin_ckeckout_log"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('hr_biometric_id'))]"/>
+        <field name="perm_unlink" eval="0" />
+</record>
+ -->
+<record id="user_biometric_id" model="res.groups">
+    <field name="name">User Biometric Attendance</field>
+    <field name="category_id" ref="hr_bio_id" />
+</record>
+
+<record id="user_biometric_attendance_id" model="ir.rule">
+        <field name="name">User  Attendance</field>
+        <field name="model_id" ref="model_checkin_ckeckout_log"/>
+        <field name="domain_force">[('users_id','=',user.id)]</field>
+        <field name="groups" eval="[(4,ref('user_biometric_id'))]"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+</record>
+
+<!-- <record id="hr_biometric_id" model="res.groups">
+    <field name="name">HR Biometric Attendance</field>
+    <field name="model_id" ref="model_attendance_log"/> 
+</record>
+
+<record id="hr_biometric_attendance_id" model="ir.rule">
+        <field name="name">HR Biometric Attendance</field>
+        <field name="model_id" ref="model_attendance_log"/>
+        <field name="groups" eval="[(4,ref('hr_biometric_id'))]"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+</record>
+
+<record id="user_biometric_id" model="res.groups">
+    <field name="name">User Biometric Attendance</field>
+    <field name="model_id" ref="model_attendance_log"/> 
+</record>
+
+<record id="user_biometric_attendance_id" model="ir.rule">
+        <field name="name">User Biometric Attendance</field>
+        <field name="model_id" ref="model_attendance_log"/>
+        <field name="domain_force">[('users_id','=',user.id)]</field>
+    	<field name="groups" eval="[(4,ref('base.group_user'))]"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+</record> -->
+<!-- <record id="user_biometric_attendance" model="res.groups">
+        <field name="name">User Biometric Attendance</field>
+        <field name="model_id" ref="model_hr_biometric_attendance_checkin_ckeckout_log"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+</record>
+<record id="user_biometric_attendance_id" model="ir.rule">
+        <field name="name">User Biometric Attendance</field>
+        <field name="model_id" ref="model_hr_biometric_attendance_checkin_ckeckout_log"/>
+        <field name="groups" eval="[(4,ref('user_biometric_attendance'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+</record>
+ -->
+
+</odoo>

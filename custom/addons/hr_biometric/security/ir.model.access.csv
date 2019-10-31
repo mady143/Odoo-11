@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_biometric_hr_biometric,hr_biometric.hr_biometric,model_hr_biometric_hr_biometric,,1,0,0,0
+access_attendance_log,attendance_log,model_attendance_log,,1,0,0,0
+access_checkin_ckeckout_log,checkin_ckeckout_log,model_checkin_ckeckout_log,,1,0,0,0

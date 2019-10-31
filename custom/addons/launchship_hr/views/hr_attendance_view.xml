@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- views -->
+
+    <record id="launchship_view_hr_attendance_tree" model="ir.ui.view">
+            <field name="name">launchship.hr.attendance.tree</field>
+            <field name="model">hr.attendance</field>
+            <field name="arch" type="xml">
+                <tree string="Attendances" create="0" edit="0">
+                    <field name="employee_id" />
+                    <field name="check_in" />
+                    <field name="check_out"/>
+                </tree>
+            </field>
+        </record>
+
+
+     <record id="action_open_launchship_hr_attendance_tree_view" model="ir.actions.act_window">
+            <field name="name">My Attendance</field>
+            <field name="res_model">hr.attendance</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('employee_id.user_id.id', '=', uid)]</field>
+        </record>
+
+
+     <menuitem
+            action="action_open_launchship_hr_attendance_tree_view"
+            id="menu_hr_attendance_tree"
+            parent="hr.menu_hr_root"
+            sequence="80"
+            groups="base.group_user"/>
+
+
+
+     <!--Leave Approval menus-->
+
+     <menuitem
+            id="hr_holidays.menu_hr_holidays_approvals"
+            name="Leaves to Approve"
+            parent="hr_holidays.menu_hr_holidays_root"
+            sequence="3"
+            groups="hr_holidays.group_hr_holidays_manager,hr_holidays.group_hr_holidays_user"/>
+
+     <menuitem
+            id="hr_holidays.menu_open_department_leave_approve"
+            name="Leaves"
+            parent="hr_holidays.menu_hr_holidays_approvals"
+            groups="hr_holidays.group_hr_holidays_manager,hr_holidays.group_hr_holidays_user"
+            action="hr_holidays.open_department_holidays_approve"
+            sequence="1"/>
+
+      <menuitem
+            id="hr_holidays.menu_open_department_leave_allocation_approve" 
+            groups="hr_holidays.group_hr_holidays_manager,hr_holidays.group_hr_holidays_user"
+            name="Leaves Allocation"
+            parent="hr_holidays.menu_hr_holidays_approvals"
+            action="hr_holidays.open_department_holidays_allocation_approve"
+            sequence="2"/>
+
+
+ </odoo>

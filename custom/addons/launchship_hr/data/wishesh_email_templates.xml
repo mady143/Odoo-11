@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="email_template_emp_birthday_wish" model="mail.template">
+        <field name="name">Birthday Wish</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="email_from">${(user.email)|safe}</field>
+        <field name="email_to">${(object.work_email)}</field>
+        <field name="email_cc">${object.employee_email_cc}</field>
+        <field name="subject">Birthday Wishes!!!</field>
+            <field name="body_html"><![CDATA[
+            <p>Dear ${object.name},</p>
+            <p>The entire Launchship family wishes you a very happy birthday. Hope all your dreams and aspirations come true in the next year. Have a great day ahead!</p>
+            <img src="/launchship_hr/static/src/img/Birthday/${object.birthday_random}.png"/>
+            <p> Wishing you the very best as you celebrate your big day. Happy Birthday to you from all of us!</p>
+        ]]>
+        </field>
+    </record>
+    
+    <record id="email_template_emp_work_anniversary_wish" model="mail.template">
+        <field name="name">Work Anniversary Wish</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="email_from">${(user.email)|safe}</field>
+        <field name="email_to">${(object.work_email)}</field>
+        <field name="email_cc">${object.employee_email_cc}</field>
+        <field name="subject">Work Anniversary Wishes!!!</field>
+            <field name="body_html"><![CDATA[
+            <p>Dear ${object.name},</p>
+            <p>It gives us immense pleasure in wishing you on a successful completion of ...years with Launchship. We value your loyalty and hope that this professional bond goes stronger in the future.</p>
+            <img src="/launchship_hr/static/src/img/work/${object.work_exp}/${object.work_random}.png"/>
+            <p>Wishing you the very best as you celebrate your big day. Happy Work Anniversary to you from all of us!</p>
+        ]]>
+        </field>
+    </record>
+    
+    <record id="email_template_emp_mrg_anniversary_wish" model="mail.template">
+        <field name="name">Mrg Anniversary Wish</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="email_from">${(user.email)|safe}</field>
+        <field name="email_to">${(object.work_email)}</field>
+        <field name="email_cc">${object.employee_email_cc}</field>
+        <field name="subject">Marriage Anniversary Wishes!!!</field>
+            <field name="body_html"><![CDATA[
+            <p>Dear ${object.name},</p>
+            <p>On this special day, we would like to wish you and your spouse a lifetime of happiness and prosperity. Happy anniversary from everyone at Launchship.</p>
+            <img src="/launchship_hr/static/src/img/marriage/${object.marriage_random}.png"/>
+            <p> Wishing you the very best as you celebrate your big day. Happy Marriage Anniversary to you from all of us!</p>
+        ]]>
+        </field>
+    </record>
+    
+</odoo>
+<!-- 0440104000051068 -->

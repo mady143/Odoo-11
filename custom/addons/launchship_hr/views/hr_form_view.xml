@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+      <!-- create user  clicking the user creation button in employee form   -->
+        <record id="hr_employee_form_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <field name="work_email" position="after">
+                    <field name="user_check_tick" invisible="1"/>
+                </field>
+               <!--  <xpath expr="//form/sheet" position="before">
+                    <header>
+                        <button name="create_user" string="Create User" type="object" class="oe_highlight"
+                                attrs="{'invisible':[('user_check_tick','=',True)]}"/>
+                    </header>
+                </xpath> -->
+                <field name="work_email" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!-- Employee View -->
+        <record id="launchship_hr_employee_view_form" model="ir.ui.view">
+            <field name="name">launchship.hr.employee.view.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='work_email']" position="replace">
+                       <field name="work_email" required="1"/>
+                    </xpath>
+
+                  <!-- remove duplicate from actions-->
+                    <xpath expr="//form" position="attributes">    
+                     <attribute name="duplicate">0</attribute>
+                    </xpath>
+
+
+                    <xpath expr="//field[@name='work_phone']" position="after">
+                        <field name="emp_experience"/>
+                        <field name="emp_number"/>
+                        <field name="blood_group"/>
+                        <field name="skype_id"/>
+                        <field name="shift"/>
+                        <field name="hide_tabs" invisible="1"/>
+                    </xpath>
+                   <!-- <xpath expr="//field[@name='department_id']" position="before">
+                        <field name="is_manager"/>
+                    </xpath>-->
+
+                    <xpath expr="//field[@name='identification_id']" position="replace">
+                        <field name="identification_id"/>
+                    </xpath>
+                    <xpath expr="//field[@name='passport_id']" position="replace">
+                        <field name="passport_id"/>
+                    </xpath>
+
+                    <xpath expr="//field[@name='bank_account_id']" position="after">
+                        <field name="pan_card"/>
+                        <field name="aadhar_card"/>
+                        <field name="election_card"/>
+                        <field name="driving_license"/>
+                        <field name="provident_fund"/>
+                        <field name="uan"/>
+                        <field name="uhid"/>
+                    </xpath>
+                    <xpath expr="//field[@name='birthday']" position="attributes">
+                        <attribute name="string">Official Date of Birth</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='birthday']" position="after">
+                        <field name="original_birthday"/>
+                        <field name="place_of_birth"/>
+                    </xpath>
+                    <xpath expr="//field[@name='address_home_id']" position="after">
+                       <field name="address_permanent_id" context="{'show_address': 1, 'default_email': work_email}"
+                                            options='{"always_reload": True, "highlight_first_line": True}' domain="[('email', '=', work_email)]"/>
+                    </xpath>
+                    <xpath expr="//field[@name='address_home_id']" position="attributes">
+                        <attribute name="string">Present Address</attribute>
+                        <attribute name="domain">[('email', '=', work_email)]</attribute>
+                        <attribute name="context">{'show_address': 1, 'default_email': work_email}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='user_id']" position="after">
+                        <field name="date_of_joining"/>
+                        <field name="biometric_login_id"/>
+                    </xpath>
+                    
+                    <xpath expr="//field[@name='marital']" position="after">
+                        <field name="marriage_date"/>
+                    </xpath>
+                    
+                    <xpath expr="//page[@name='personal_information']" position="attributes">
+                         <attribute name="attrs">{'invisible': [('hide_tabs', '=', True)]}</attribute>
+                         <attribute name="groups">base.group_user</attribute>
+                    </xpath>
+
+                    <!--<xpath expr="//field[@name='calendar_id']" position="attributes">
+                         <attribute name="required">1</attribute>
+                    </xpath>
+
+                    <xpath expr="//field[@name='fam_spouse_tel']" position="after">
+                        <field name="spouse_uhid"/>
+                    </xpath>  
+
+                    <xpath expr="//field[@name='fam_father_date_of_birth']" position="after">
+                        <field name="father_uhid"/>
+                    </xpath>
+
+                    <xpath expr="//field[@name='fam_mother_date_of_birth']" position="after">
+                        <field name="mother_uhid"/>
+                    </xpath> -->                 
+                    
+                    <xpath expr="//page[@name='personal_information']" position="inside">
+                       <group>
+                        <group string="Primary Emergency Contact Details">
+                           <field name="primary_contact_name"/>
+                           <field name="primary_contact_relation"/>
+                           <field name="primary_contact_no"/>
+                        </group>
+                        <group string="Secondary Emergency Contact Details">
+                           <field name="secondary_contact_name"/>
+                           <field name="secondary_contact_relation"/>
+                           <field name="secondary_contact_no"/>
+                        </group>
+                        <group string="Nominee Details For Insurance">
+                           <field name="nominee_name"/>
+                           <field name="nominee_dob"/>
+                           <field name="nominee_relation"/>
+                           <field name="nominee_gender"/>
+                        </group>
+                       </group>
+                    </xpath>
+
+                    <!-- making readonly for other emps other than hr managers, officers-->
+                    <xpath expr="//field[@name='image']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='name']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='address_id']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='mobile_phone']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='work_location']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='work_email']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='work_phone']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <!--<xpath expr="//field[@name='emp_experience']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>-->
+                    <xpath expr="//field[@name='emp_number']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='emp_experience']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='shift']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='blood_group']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='skype_id']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                   <!-- <xpath expr="//field[@name='is_manager']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath> -->
+                    <xpath expr="//field[@name='department_id']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='job_id']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='parent_id']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='coach_id']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <!--<xpath expr="//field[@name='calendar_id']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>-->
+                    <xpath expr="//field[@name='notes']" position="attributes">
+                        <attribute name="attrs">{'readonly': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='message_ids']" position="attributes">
+                        <attribute name="attrs">{'invisible': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+
+                    <!--<xpath expr="//field[@name='public_info']" position="attributes">
+                        <attribute name="attrs">{'invisible': 1}</attribute>
+                    </xpath>-->
+
+                    <!-- Hiding fields from hr_experience only employee can edit his own data-->
+                    <!--<xpath expr="//page[@name='academic']" position="attributes">
+                        <attribute name="attrs">{'invisible': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//page[@name='professional']" position="attributes">
+                        <attribute name="attrs">{'invisible': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>
+                    <xpath expr="//page[@name='certification']" position="attributes">
+                        <attribute name="attrs">{'invisible': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>-->
+  
+                    <!-- from hr_skill module -->
+                   <!--<xpath expr="//page[@name='skill']" position="attributes">
+                        <attribute name="attrs">{'invisible': [('hide_tabs', '=', True)]}</attribute>
+                    </xpath>-->
+                    
+            </field>
+        </record>
+        
+       <!-- <record id="launchship_hr_employee_view_form_family" model="ir.ui.view">
+            <field name="name">launchship.hr.employee.view.form.family</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_family.hr_employee_view_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//page[@name='family']" position="attributes">
+                         <attribute name="attrs">{'invisible': [('hide_tabs', '=', True)]}</attribute>
+                         <attribute name="groups">base.group_user</attribute>
+                    </xpath>
+             </field>
+        </record>-->
+
+
+
+        <record id="launchship_open_view_employee_list_my" model="ir.actions.act_window">
+            <field name="name">Employees Information</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="search_view_id" ref="hr.view_employee_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new employee.
+              </p><p>
+                With just a quick glance on the Odoo employee screen, you
+                can easily find all the information you need for each person;
+                contact data, job position, availability, etc.
+              </p>
+            </field>
+        </record>
+
+        <menuitem
+            id="launchship_menu_open_view_employee_list_my"
+            action="launchship_open_view_employee_list_my"
+            parent="hr.menu_hr_root"
+            sequence="10"/>
+
+         <menuitem
+            id="hr.menu_open_view_employee_list_my"
+            action="hr.open_view_employee_list_my"
+            parent="hr.menu_hr_root"
+            sequence="3"
+            groups="hr.group_hr_manager,hr.group_hr_user"/>
+
+   <!--to view my profile-->
+        <record id="launchship_open_view_my_profile" model="ir.actions.act_window">
+            <field name="name">My Profile</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_id" ref="hr.hr_kanban_view_employees"/>
+            <field name="domain">[('user_id','=',uid)]</field>
+            <field name="search_view_id" ref="hr.view_employee_filter"/>
+        </record>
+
+        <menuitem
+            id="launchship_menu_open_view_my_profile"
+            action="launchship_open_view_my_profile"
+            web_icon="launchship_hr,static/description/icon.png"
+            sequence="9"
+            groups="base.group_user"/>
+
+
+!--shift_timings-->
+       <record id="employee_shifts_form" model="ir.ui.view">
+            <field name="name">hr.employee.shift.form</field>
+            <field name="model">employee.shifts</field>
+            <field name="arch" type="xml">
+                <form string="Employee Shifts">
+                    <group>
+                        <field name="name"/>
+                        <field name="start_time" widget="float_time"/>
+                        <field name="end_time" widget="float_time"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="employee_shifts_list" model="ir.ui.view">
+            <field name="name">employee_shifts</field>
+            <field name="model">employee.shifts</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Employees shifts">
+                    <field name="name"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_view_categ_shift" model="ir.actions.act_window">
+            <field name="name">Shift Timings</field>
+            <field name="res_model">employee.shifts</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            id="hr_employee_shifts_form"
+            action="open_view_categ_shift"
+            parent="hr.menu_human_resources_configuration"
+            groups="hr.group_hr_manager"
+            sequence="5"/>
+
+
+        <record id="open_view_categ_shift2" model="ir.actions.act_window">
+            <field name="name">Res Partner</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+          <menuitem
+            id="hr_employee_shifts_form2"
+            action="open_view_categ_shift2"
+            parent="hr.menu_human_resources_configuration"
+            groups="hr.group_hr_manager"
+            sequence="15"/>
+
+
+</odoo>

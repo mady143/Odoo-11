@@ -1,0 +1,8 @@
+<odoo>
+    <data>
+        <t t-foreach="projects" t-as="project">
+          <strong><t t-esc="project.user_id" /></strong>
+          <b><t t-esc="project.checkin" /></b>
+        </t>
+    </data>
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--Work From Home -->
+        <record id="holiday_status_workfromhome" model="hr.holidays.status">
+            <field name="name">Work From Home</field>
+            <field name="limit" eval="True"/>
+            <field name="color_name">violet</field>
+        </record>
+    </data>
+</odoo>

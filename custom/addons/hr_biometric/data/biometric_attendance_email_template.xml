@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="biometric_attendance_email_template" model="mail.template">
+        <field name="name">Biometric Attendance Log </field>
+        <field name="model_id" ref="model_checkin_ckeckout_log"/>
+        <field name="email_from">${(user.email)|safe}</field>
+        <field name="email_to">${(object.user_email)}</field>
+        <field name="email_cc">${(user.email)|safe}</field>
+        <field name="subject">Biometric Attendance!!!</field>
+            <field name="body_html"><![CDATA[
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p><h4>Hi ${object.user_name},${object.user_id},${object.date}</h4><p>
+                    <p>Your logout time is not recorded at the Biometric device for ......Please inform the reason for the same and correct the issue. If you need any assistance, please contact the HR team.
+                    <h4>Note: It is mandatory to Punch-In and Punch-Out at the Biometric device for updating the attendance records<h4></p>
+                </div>
+
+        ]]>
+        </field>
+    </record>
+
+    <record id="biometric_attendance_no_checkin_email_template" model="mail.template">
+        <field name="name">Biometric Attendance Log </field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="email_from">${(user.email)|safe}</field>
+        <field name="email_to">${(object.work_email)}</field>
+        <field name="email_cc">${(user.email)|safe}</field>
+        <field name="subject">Biometric Attendance!!!</field>
+            <field name="body_html"><![CDATA[
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <p><h3>Hi ${object.name},${object.emp_number}</h3><p>
+                    <p>Your attendance is not recorded at the Biometric device for ……
+                    Please mark your leave accordingly. For any further assistance, please meet the HR team.
+                    <h4>Note: It is mandatory to Punch-In and Punch-Out at the Biometric device for updating the attendance records<h4></p>
+                </div>
+
+        ]]>
+        </field>
+    </record>
+    
+</odoo>

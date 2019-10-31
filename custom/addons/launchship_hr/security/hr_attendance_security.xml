@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- my modifications for CEO -->
+    <record id="group_hr_attendance_ceo" model="res.groups">
+        <field name="name">HR-OFFICER</field>
+        <field name="category_id" ref="base.module_category_hr_attendance"/>
+        <field name="implied_ids" eval="[(4, ref('hr_attendance.group_hr_attendance_manager'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+
+    <record id="group_hr_attendance_ceo" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('hr_attendance.group_hr_attendance'))]"/>
+    </record>
+
+
+        <record id="hr_attendance_rule_attendance_ceo" model="ir.rule">
+            <field name="name">ceo: full access</field>
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('launchship_hr.group_hr_attendance_ceo'))]"/>
+        </record>
+
+        <!--<record id="hr_attendance_rule_attendance_manager_team" model="ir.rule">
+            <field name="name">teamlead: full access only team</field>
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
+            <field name="domain_force">['|',('employee_id.parent_id.user_id','=',user.id),('employee_id.parent_id.parent_id.user_id','=',user.id)]</field>
+            <field name="perm_unlink" eval="0"/>
+            <field name="groups" eval="[(4,ref('hr_attendance.group_hr_attendance_user'))]"/>
+        </record>-->
+   <!-- this condition is override the core rule -->
+        <record id="hr_attendance.hr_attendance_rule_attendance_manager" model="ir.rule">
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
+            <field name="domain_force">['|',('employee_id.parent_id.user_id','=',user.id),('employee_id.parent_id.parent_id.user_id','=',user.id)]</field>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+
+        <record id="hr_attendance_rule_attendance_officer_personal" model="ir.rule">
+            <field name="name">teamlead : personal</field>
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
+		<field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+		<field name="perm_read" eval="1"/>
+		<field name="perm_write" eval="0"/>
+		<field name="perm_create" eval="0"/>
+		<field name="perm_unlink" eval="0"/>
+            <field name="groups" eval="[(4,ref('hr_attendance.group_hr_attendance_user'))]"/>
+        </record>
+
+
+  
+
+   <!-- remove duplicate  in actions-->
+   <record id="hr_attendance.hr_attendance_view_form" model="ir.ui.view">
+        <field name="name">hr.attendance.form</field>
+        <field name="model">hr.attendance</field>
+        <field name="arch" type="xml">
+            <form string="Employee attendances" duplicate="0">
+                <sheet>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="check_in"/>
+                        <field name="check_out"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+ <!--<record id="hr_attendance.hr_attendance_view_form" model="ir.ui.view">
+         <xpath expr="//form" position="attributes">    
+           <attribute name="duplicate">0</attribute>
+         </xpath>
+  </record>-->
+</odoo>

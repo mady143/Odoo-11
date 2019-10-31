@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="group_hr_ceo" model="res.groups">
+        <field name="name">HR-OFFICER</field>
+        <field name="comment">the user will have an access to the human resources configuration as well as statistic reports.</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+        <field name="implied_ids" eval="[(4, ref('hr.group_hr_manager'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+
+   <record id="property_rule_employee_ceo" model="ir.rule">
+        <field name="name">Employee CEO </field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('launchship_hr.group_hr_ceo'))]"/>
+    </record>
+
+
+   <record id="property_rule_employee_teamlead" model="ir.rule">
+        <field name="name">Employee Teamlead </field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="domain_force">[(0, '=', 1)]</field>
+	    <field name="perm_read" eval="False"/>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+<!-- Restrict Create,delete,update company(res_partner) information to all users,managers,officers(team lead) not CEO-->
+
+    <record id="property_rule_res_partner_employee" model="ir.rule">
+        <field name="name">Employee Teamlead res_partner </field>
+        <field name="model_id" ref="hr.model_res_partner"/>
+        <field name="domain_force">[(0, '=', 1)]</field>
+	<field name="perm_read" eval="False"/>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="property_rule_res_partner_employee_ceo" model="ir.rule">
+        <field name="name">Employee CEO res_partner</field>
+        <field name="model_id" ref="hr.model_res_partner"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('launchship_hr.group_hr_ceo'))]"/>
+    </record>
+     
+  <!-- Restrict Create,delete,update department information to all users,managers,officers(team lead) not CEO-->
+  <record id="property_rule_department_user" model="ir.rule">
+        <field name="name">Department_user </field>
+        <field name="model_id" ref="hr.model_hr_department"/>
+        <field name="domain_force">[(0, '=', 1)]</field>
+	<field name="perm_read" eval="False"/>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="property_rule_department_ceo" model="ir.rule">
+        <field name="name">Department_CEO</field>
+        <field name="model_id" ref="hr.model_hr_department"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('launchship_hr.group_hr_ceo'))]"/>
+    </record>
+
+<!-- Restrict Create,delete,update job information to all users,managers,officers(team lead) not CEO-->
+    <record id="property_rule_job_employee" model="ir.rule">
+        <field name="name">Job Employee </field>
+        <field name="model_id" ref="hr.model_hr_job"/>
+        <field name="domain_force">[(0, '=', 1)]</field>
+	    <field name="perm_read" eval="False"/>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="property_rule_job_ceo" model="ir.rule">
+        <field name="name">Job CEO</field>
+        <field name="model_id" ref="hr.model_hr_job"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('launchship_hr.group_hr_ceo'))]"/>
+    </record>
+<!-- Restrict Create,delete,update Working_Shifts information to all users,managers,officers(team lead) not CEO-->
+   <record id="property_rule_working_shifts_employee" model="ir.rule">
+        <field name="name">working_shifts_user</field>
+        <field name="model_id" ref="resource.model_resource_calendar"/>
+        <field name="domain_force">[(0, '=', 1)]</field>
+	<field name="perm_read" eval="False"/>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="property_rule_working_shifts_ceo" model="ir.rule">
+        <field name="name">working_shifts_ CEO</field>
+        <field name="model_id" ref="resource.model_resource_calendar"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('launchship_hr.group_hr_ceo'))]"/>
+    </record>
+<!-- Restrict Create,delete,update Employee Tags to all users,managers,officers(team lead) not CEO-->
+   <record id="property_rule_employee_tags_user" model="ir.rule">
+        <field name="name">employee_tags_user</field>
+        <field name="model_id" ref="hr.model_hr_employee_category"/>
+        <field name="domain_force">[(0, '=', 1)]</field>
+	<field name="perm_read" eval="False"/>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="property_rule_employee_tags_ceo" model="ir.rule">
+        <field name="name">employee_tags_ CEO</field>
+        <field name="model_id" ref="hr.model_hr_employee_category"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('launchship_hr.group_hr_ceo'))]"/>
+    </record>
+
+
+    <record id="property_rule_working_shifts_timings_employee" model="ir.rule">
+        <field name="name">working_shifts_timings_user</field>
+        <field name="model_id" ref="model_employee_shifts"/>
+        <field name="domain_force">[(0, '=', 1)]</field>
+	<field name="perm_read" eval="False"/>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="property_rule_working_shifts_timings_ceo" model="ir.rule">
+        <field name="name">working_shiftstimings_timings_ CEO</field>
+        <field name="model_id" ref="model_employee_shifts"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('launchship_hr.group_hr_ceo'))]"/>
+    </record>
+
+    <!--<delete id="hr_holidays.action_hr_holidays_summary_employee" model="ir.actions.act_window" />-->
+
+
+</odoo>

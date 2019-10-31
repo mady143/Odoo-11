@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+hr.access_hr_employee_system_user,hr.employee system user,model_hr_employee,base.group_user,1,1,0,0
+group_hr_manager_resource_cal,group_hr_manager_resource_cal,resource.model_resource_calendar,hr.group_hr_manager,1,1,1,1
+access_resource_calendar_attendance_hr_manager,hr.manager.resource.calendar.attendance,resource.model_resource_calendar_attendance,hr.group_hr_manager,1,1,1,1
+group_hr_manager_shift_call,hr.shift system manager,model_employee_shifts,hr.group_hr_manager,1,1,1,1
+group_hr_user_shift_call,hr.shift system user,model_employee_shifts,base.group_user,1,0,0,0

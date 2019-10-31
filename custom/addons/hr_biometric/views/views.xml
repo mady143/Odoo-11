@@ -1,0 +1,254 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    
+  <record id="view_biometric_form" model="ir.ui.view">
+        <field name="name">hr.biometric.form</field>
+        <field name="model">hr_biometric.hr_biometric</field>
+        <field name="arch" type="xml">
+            <form string="Biometric Device">
+                <header>
+                    <button name="download_attendance" type="object" string="Download Data" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="device_ip"/>
+                            <field name="device_port"/>
+                            <field name="checkin_status"/>
+                            <field name="checkout_status"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="hr_biometric.list">
+      <field name="name">hr_biometric list</field>
+      <field name="model">hr_biometric.hr_biometric</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="device_ip" />
+          <field name="device_port" />
+
+        </tree>
+      </field>
+    </record>
+
+
+<record id="weekday_form" model="ir.ui.view">
+        <field name="name">Week Days From</field>
+        <field name="model">weekdays_list</field>
+        <field name="arch" type="xml">
+            <form string="Biometric Device">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="working_days"/>
+                          </group>
+                          <group>
+                            <!-- <field name="week_end_day"/> -->
+                            <field name="week_offs"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="weekday_list">
+      <field name="name">weekdays list</field>
+      <field name="model">weekdays_list</field>
+      <field name="arch" type="xml">
+        <tree>
+         <field name="working_days"/>
+        <!--  <field name="week_start_day"/>
+         <field name="week_end_day"/> -->
+         <field name="week_offs"/>
+        </tree>
+      </field>
+    </record>
+
+
+<record id="day_form" model="ir.ui.view">
+        <field name="name">Days_From</field>
+        <field name="model">days</field>
+        <field name="arch" type="xml">
+            <form string="Biometric Device">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="working_days"/>
+                          </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="day_list">
+      <field name="name">Days_List</field>
+      <field name="model">days</field>
+      <field name="arch" type="xml">
+        <tree>
+         <field name="working_days"/>
+        </tree>
+      </field>
+    </record>
+
+
+
+
+
+
+
+     <record model="ir.ui.view" id="hr_biometric.attendance_log">
+      <field name="name">hr_biometric_attendance_log</field>
+      <field name="model">attendance_log</field>
+      <field name="arch" type="xml">
+        <tree create="false" import="true">
+            <field name="user_id"/>
+            <field name="user_name"/>
+            <field name="user_email"/>
+            <field name="date"/>
+            <field name="checkin"/>
+            <field name="checkout"/>
+
+           <!--  <field name="status"/>
+            <field name="timestamp" widget="datetime"/> -->
+            <field name="worked_hours" sum="Total Worked Hours"/>
+        </tree>
+      </field>
+    </record> 
+
+
+    <record id="hr_employee_attendance" model="ir.ui.view">
+            <field name="name">Employee Attendance</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+              <xpath expr="//button[@name='toggle_active']" position="before">
+                
+                <button name = "login_user_att" type="object">
+                  <div class="o_stat_info">
+                        <span class="o_stat_text">Attendance</span>
+                  </div>
+                </button>
+              </xpath>
+          </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="hr_biometric.attendance">
+      <field name="name">hr_biometric_attendance_checkin_checkout</field>
+      <field name="model">checkin_ckeckout_log</field>
+      <field name="arch" type="xml">
+       <tree create="false" import="true" string="Attendances">
+            <field name="user_id"/>
+            <field name="user_name"/>
+            <field name="user_email"/>
+            <field name="date" widget="date"/>
+            <field name="user_checkin" widget="datetime"/>
+            <field name="user_checkout" widget="datetime"/>
+            <field name="working_hours"/>
+            <field name="worked_hours"/>
+            <field name="break_hours"/>
+            <button name = "att_log_func" type="object" string="Attendance Logs" class="oe_highlight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- <record id="view_stock_level_forecast_graph" model="ir.ui.view">
+
+        <field name="name">Attendance Graph View</field>
+
+        <field name="model">checkin_ckeckout_log</field>
+
+        <field name="arch" type="xml">
+          <graph string="Attendance" type="bar">
+              <field name="user_name" type="col"/>
+              <field name="date"/>
+              <field name="worked_hours" type="measure"/
+          </graph>
+        </field>
+
+</record> -->
+
+
+
+    <record id="view_hr_attendance_log_filter" model="ir.ui.view">
+            <field name="name">hr.attendance_log.filter</field>
+            <field name="model">checkin_ckeckout_log</field>
+            <field name="arch" type="xml">
+                <search>
+                   <filter string="Today" name="today_attendance" domain="['|','&amp;',('user_checkin', '&gt;=', datetime.datetime.now().replace(hour=0, minute=0, second=0)),('user_checkin', '&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:59:59')),'&amp;',('user_checkout', '&gt;=', datetime.datetime.now().replace(hour=0, minute=0, second=0)),('user_checkout','&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:59:59'))]"/>
+                  <field name="user_name"/>
+                  <field name="user_email"/>
+                  <field name="user_id"/>
+                   <group>
+                        <filter string="ID" context="{'group_by' : 'user_id'}" />
+                        <filter string="Name"  context="{'group_by' : 'user_name'}" />
+                        <filter string="Email"  context="{'group_by': 'user_email'}"/>
+                    </group>
+                </search>
+            </field>
+    </record>
+     
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="hr_biometric.action_window">
+      <field name="name">Biometric Attendance</field>
+      <field name="res_model">hr_biometric.hr_biometric</field>
+      <field name="view_mode" >tree,form</field>
+      
+    </record>
+
+    <record model="ir.actions.act_window" id="hr_biometric_attendance_log">
+      <field name="name">Attendance Log</field>
+      <field name="res_model">attendance_log</field>
+      <field name="view_mode">tree</field>
+    </record>
+     
+    <record model="ir.actions.act_window" id="hr_biometric_attendance_checkin_ckeckout_log">
+      <field name="name">Attendance Log</field>
+      <field name="res_model">checkin_ckeckout_log</field>
+      <field name="context">{'search_default_today_attendance': 1}</field>
+      <field name="view_mode">tree</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="weekdays_start_day_week_end_day_week">
+      <field name="name">WeekDays</field>
+      <field name="res_model">weekdays_list</field>
+     <!--  <field name="context">{'search_default_today_attendance': 1}</field> -->
+      <field name="view_mode">tree,form</field>
+    </record>
+   <record model="ir.actions.act_window" id="week_days">
+      <field name="name">Days</field>
+      <field name="res_model">days</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Top menu item -->
+    
+    <menuitem name="Biometric Attendance" id="hr_biometric.menu_root"/>
+    
+    <!-- menu categories -->
+    
+    <menuitem name="Configuration" id="hr_biometric.menu_1" parent="hr_biometric.menu_root"/>
+    <menuitem name="Attendance" id="hr_biometric.menu_2" parent="hr_biometric.menu_root"/>
+    <menuitem name="Weekday" id="hr_biometric.menu_3" parent="hr_biometric.menu_root"/>
+    <!-- <menuitem name="days" id="hr_biometric.menu_4" parent="hr_biometric.menu_root"/> -->
+        <!-- actions -->
+    <menuitem name="Device Configuration" id="hr_biometric.menu_1_list" parent="hr_biometric.menu_1"
+              action="hr_biometric.action_window" groups='hr_biometric_id'/>
+
+    <menuitem name="Attendance Log " id="hr_biometric.menu_2_list" parent="hr_biometric.menu_2" action="hr_biometric_attendance_checkin_ckeckout_log"/>
+
+     <menuitem name="Week Days " id="hr_biometric.menu_3_list" parent="hr_biometric.menu_3" action="weekdays_start_day_week_end_day_week" groups='hr_biometric_id'/>
+     <!-- <menuitem name="Days " id="hr_biometric.menu_4_list" groups='hr_biometric_id' parent="hr_biometric.menu_4" action="week_days"/> -->
+    
+  </data>
+</odoo>
